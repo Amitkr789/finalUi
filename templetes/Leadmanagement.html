@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+{% block title %} Create User{% endblock title %}
+{% block Breadcrumb %} Create User {% endblock Breadcrumb %}
+{% block body %} 
+{% load static %}
+<style>
+       /* Custom dropdown styling */
+       .select-container {
+      max-width: 100%;
+      position: relative;
+    }
+
+    /* .search-box {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      box-sizing: border-box;
+    } */
+
+    .dropdownForCont {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      position: absolute;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .dropdown-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f0f0f0;
+    }
+
+    .hidden {
+      display: none;
+    }
+   
+</style>
+<div class="container-fluid mt-4 tableBoxDesign">
+        <div class="container-fluid TableTopHeader"><div class="row">
+            <div class="col-4"><h5 style="position: relative;left:-5px;">Manage Lead</h5></div>
+            <div class="col-8">
+                
+                    <div class="row" style="float:right;">
+                        <div class="col-3"><select class="dataSyst form-select"><option>With selected</option><option>Delete</option></select></div>
+                        <div class="col-3"><button class="TableButton activeBg" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus-lg"></i> New</button></div>
+                        <div class="col-3"><button class="TableButton"><i class="bi bi-upload"></i> Import</button></div>
+                        <div class="col-3"><button class="TableButton" data-bs-toggle="modal" data-bs-target="#exampleModalforExport"><i class="bi bi-upload"></i> Export</button></div>
+                   
+                    </div>
+                    
+              </div>
+        </div></div>
+            <table class="table table-striped" id="dataTabled" style="font-size: 13px;">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" class="form-check-input checkbox" />&nbsp; Unique id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Country</th>
+                        <th>Source</th>
+                        <th>Date Created</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+
+                  {% for ListLead in ListLead %}
+                  <tr>
+                      <td><input type="checkbox" class="form-check-input checkbox"/> {{ ListLead.uniqueId }}</td>
+                      <td>{{ ListLead.name }}</td>
+                      <td>{{ ListLead.email }}</td>
+                      <td style="text-align: left;">{{ ListLead.phone }}</td>
+                      <td style="text-align: left;">{{ ListLead.country }}</td>
+                      <td style="text-align: left;">{{ ListLead.Source }}</td>
+                      <td style="text-align: left;">{{ ListLead.doc }}</td>
+                      <td>{% if ListLead.status == 'hot' %}
+                              Hot Lead
+                          {% elif  ListLead.status == 'warm' %}
+                              Warm Lead
+                          {% elif  ListLead.status == 'cold1' %}
+                              Cold Attempt 1
+                          {% elif  ListLead.status == 'cold2' %}
+                              Cold Attempt 2
+                          {% elif  ListLead.status == 'cold3' %} 
+                              Cold Attempt 3
+                          {% elif  ListLead.status == 'not-interested' %} 
+                              Not Interested     
+                          {% elif  ListLead.status == 'junk' %} 
+                              Junk
+                          {% elif  ListLead.status == 'converted' %} 
+                              Converted
+                          {% else %}
+                              Unknown
+                          {% endif %}
+                      </td>
+                      <td><div class="divAction container">
+                        <div class="row">
+                          <div class="col-4"><i class="bi bi-pencil"></i></div>
+                          <div class="col-4"><i class="bi bi-archive"></i></div>
+                          <div class="col-4" data-bs-toggle="modal" data-bs-target="#exampleModalView"><i class="bi bi-eye"></i></div>
+                        </div>
+                      </div></td>
+                                
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+            </table>
+        </div>
+</div>
+
+
+<!-- Export -->
+<div class="modal fade modal-xl" id="exampleModalforExport" tabindex="-1" aria-labelledby="exampleModalLabelExport" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Export</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped" id="dataTabledForButton" style="font-size: 13px;">
+          <thead>
+              <tr>
+                  <th>Unique id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Country</th>
+                  <th>Source</th>
+                  <th>Date Created</th>
+                  <th>Status</th>
+              </tr>
+          </thead>
+          <tbody>
+
+          {% for ListLead in ListLead %}
+          <tr>
+              <td><input type="checkbox" class="form-check-input checkbox"/> {{ ListLead.uniqueId }}</td>
+              <td>{{ ListLead.name }}</td>
+              <td>{{ ListLead.email }}</td>
+              <td style="text-align: left;">{{ ListLead.phone }}</td>
+              <td style="text-align: left;">{{ ListLead.country }}</td>
+              <td style="text-align: left;">{{ ListLead.Source }}</td>
+              <td style="text-align: left;">{{ ListLead.doc }}</td>
+              <td>{% if ListLead.status == 'hot' %}
+                      Hot Lead
+                  {% elif  ListLead.status == 'warm' %}
+                      Warm Lead
+                  {% elif  ListLead.status == 'cold1' %}
+                      Cold Attempt 1
+                  {% elif  ListLead.status == 'cold2' %}
+                      Cold Attempt 2
+                  {% elif  ListLead.status == 'cold3' %} 
+                      Cold Attempt 3
+                  {% elif  ListLead.status == 'not-interested' %} 
+                      Not Interested     
+                  {% elif  ListLead.status == 'junk' %} 
+                      Junk
+                  {% elif  ListLead.status == 'converted' %} 
+                      Converted
+                  {% else %}
+                      Unknown
+                  {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+
+        </div></div></div></div>
+ <!-- Export -->
+<!-- View user -->
+<div class="modal fade modal-xl" id="exampleModalView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Stanlee</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body dataMainUl" style="font-size: 13px;">
+        <div class="row">
+          <div class="col-8"></div>
+          <div class="col-4">
+            <div class="Box_action">
+              <div class="row">
+                  <div class="col-3 statusUpd"><i class="bi bi-pencil-square"></i> Status</div>
+                  <div class="col-3 statusUpd"><i class="bi bi-pencil-square"></i> Note</div>
+                  <div class="col-3 statusUpd"><i class="bi bi-pencil-square"></i> Assign</div>
+                  <div class="col-3 statusUpd"><i class="bi bi-pencil-square"></i> Handle</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-4">
+            <h5>Lead Information</h5>
+            <ul>
+              <li><span class="fw-bold">Name:</span><br>Stanlee</li>
+              <li><span class="fw-bold">phone:</span><br>0000 00000 000</li>
+              <li><span class="fw-bold">Email:</span><br>Stanlee@hmail.com</li>
+              <li><span class="fw-bold">Country:</span><br>USA</li>
+
+            </ul>
+          </div>
+          <div class="col-4">
+            <h5>General Information</h5>
+            <ul>
+              <li><span class="fw-bold">Status:</span><br><span style="background-color: hwb(0 67% 0%);border-radius: 50px;padding:2px 10px 2px 10px;;">Hot Lead</span></li>
+              <li><span class="fw-bold">Assigned:</span><br>Vikash</li>
+              <li><span class="fw-bold">Created at:</span><br>26 min ago</li>
+              <li><span class="fw-bold">Last Contact:</span><br>1 day ago</li>
+
+            </ul>
+          </div>
+          <div class="col-4">
+            <h5>Custom fields</h5>
+            <ul>
+              <li><span class="fw-bold">Note:</span><br>
+                Master essential clinical skills with our comprehensive course designed to help you excel in the NDECC exam.
+
+              </li>
+              <li><span class="fw-bold">Handeled by:</span><br>Ravi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      </div></div></div>
+
+<!-- Model for add member -->
+<div class="modal fade modal-xl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create Lead</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="LeadGenerationForm" method="post">
+            {% csrf_token %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Name" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Unique Id</label>
+                                <input type="text" class="form-control" name="uniqueId" placeholder="Unique Id" value="{{UnqId}}"/>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Email Id</label>
+                                <input type="email" class="form-control" name="email" placeholder="Email Id" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Phone Number</label>
+                                <input type="number" class="form-control" name="phone" placeholder="Phone Number" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lead-status">Select Lead Status</label>
+                                <select class="form-select" name="status">
+                                    <option value="hot" style="color: red; font-weight: bold;">Hot Lead</option>
+                                    <option value="warm" style="color: orange; font-weight: bold;">Warm Lead</option>
+                                    <option value="cold1" style="color: blue;">Cold Attempt 1</option>
+                                    <option value="cold2" style="color: blue;">Cold Attempt 2</option>
+                                    <option value="cold3" style="color: blue;">Cold Attempt 3</option>
+                                    <option value="not-interested" style="color: gray;">Not Interested</option>
+                                    <option value="junk" style="color: brown;">Junk</option>
+                                    <option value="converted" style="color: green; font-weight: bold;">Converted</option>
+                                </select>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lead-status">Lead Source</label>
+                                <select class="form-select" name="Source">
+                                    <option>Facebook</option>
+                                    <option>Instagram</option>
+                                    <option>Linkedin</option>
+                                    <option>Google Ads</option>
+                                    <option>Tiktok</option>
+                                    <option>Direct Call</option>
+                                    <option>Referral</option>
+                                    <option>B2B </option>
+                                    <option>Walk-In</option>
+                                    
+                                </select>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                              <label for="lead-status">Assigned</label>
+                              <select class="form-select" name="Assigned">
+                                  <option>Select</option>
+                                  <option>Instagram</option>
+                                  <option>Linkedin</option>
+                                  <option>Google Ads</option>
+                                  <option>Tiktok</option>
+                                  <option>Direct Call</option>
+                                  <option>Referral</option>
+                                  <option>B2B </option>
+                                  <option>Walk-In</option>
+                                  
+                              </select>
+                              <span class="error-message">This field is required.</span>
+                          </div>
+                            <div class="col-md-4">
+                                <label for="lead-status">Last Contact date</label>
+                                <input type="date" class="form-control" name="lcd"/>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lead-status">Date created </label>
+                                <input type="date" class="form-control" name="doc"/>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lead-status">Country</label>
+                                <div class="select-container w-100">
+                                    <input type="text" class="search-box form-control" placeholder="Search for a country..." name="country">
+                                    <div class="dropdownForCont">
+                                      <!-- Country options will be populated here -->
+                                    </div>
+                                  </div>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>Add Note(Which type of application required)</label>
+                        <textarea class="form-control" placeholder="Add note" name="addnOTE"></textarea>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-dark buttonMsh mt-3" style="background-color: #b80604;">Save Lead</button>
+                    </div>
+                </div>
+                
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+      const countries = [
+      "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+      "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+      "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic",
+      "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+      "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+      "Fiji", "Finland", "France",
+      "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+      "Haiti", "Honduras", "Hungary",
+      "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy",
+      "Jamaica", "Japan", "Jordan",
+      "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
+      "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+      "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique",
+      "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
+      "Oman",
+      "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+      "Qatar",
+      "Romania", "Russia", "Rwanda",
+      "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+      "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+      "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
+      "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
+      "Yemen",
+      "Zambia", "Zimbabwe"
+    ];
+
+    const searchBox = document.querySelector('.search-box');
+    const dropdown = document.querySelector('.dropdownForCont');
+
+    function populateDropdown() {
+      dropdown.innerHTML = '';
+      countries.forEach(country => {
+        const item = document.createElement('div');
+        item.textContent = country;
+        item.classList.add('dropdown-item');
+        item.addEventListener('click', () => {
+          searchBox.value = country;
+          dropdown.classList.add('hidden');
+        });
+        dropdown.appendChild(item);
+      });
+    }
+
+    searchBox.addEventListener('input', () => {
+      const filter = searchBox.value.toLowerCase();
+      const items = dropdown.querySelectorAll('.dropdown-item');
+      items.forEach(item => {
+        if (item.textContent.toLowerCase().includes(filter)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      dropdown.classList.remove('hidden');
+    });
+
+    searchBox.addEventListener('focus', () => {
+      dropdown.classList.remove('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.select-container')) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    populateDropdown();
+  </script>
+{% endblock body %}
+

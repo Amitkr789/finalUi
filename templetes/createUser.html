@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block title %} Create User{% endblock title %}
+{% block Breadcrumb %} Create User {% endblock Breadcrumb %}
+{% block body %} 
+{% load static %}
+
+<div class="container-fluid mt-4 tableBoxDesign">
+        <div class="container-fluid TableTopHeader"><div class="row">
+            <div class="col-9"><h5 style="position: relative;left:-5px;">Manage Member</h5></div>
+            <div class="col-3"><button class="TableButton activeBg" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width:150px;float: right;"><i class="bi bi-plus-circle"></i> Add member</button></div>
+        </div></div>
+            <table class="table table-striped" id="dataTabled" style="font-size: 13px;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Profile Picture</th>
+                        <th>Name</th>
+                        <th>Email Id</th>
+                        <th style="text-align: left !important;">Phone Number</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for users in users %}
+                <tr>
+                   <td><input type="checkbox" class="form-check-input checkbox"/></td>
+                    <td>
+                        {% if users.img %}
+                            <img src="static{{users.img.url}}" class="smallImg" style="width:40px;height:40px;border-radius: 50px;;" alt="profilePicture"/>
+                        {% else %}
+                            <img src="static/profiePicga.png" class="smallImg" style="width:40px;height:40px;border-radius: 50px;;" alt="profilePicture"/>
+                        {% endif %}
+                        </td>
+                    <td>{{ users.name }}</td>
+                    <td>{{ users.email }}</td>
+                    <td style="text-align: left;">{{ users.phone }}</td>
+                    <td><a href="#">Change..</a></td>
+                    <td>{% if users.role == '1' %}
+                            Super Admin
+                        {% elif  users.role == '2' %}
+                            Manager
+                        {% elif  users.role == '3' %}
+                            Team Leader
+                        {% elif  users.role == '4' %}
+                            Team Member
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="divAction container">
+                            <div class="row">
+                              <div class="col-4"><i class="bi bi-pencil"></i></div>
+                              <div class="col-4"><i class="bi bi-archive"></i></div>
+                              <div class="col-4" data-bs-toggle="modal" data-bs-target="#exampleModalView"><i class="bi bi-eye"></i></div>
+                            </div>
+                          </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+<!-- Model for add member -->
+<div class="modal fade modal-xl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Create member</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="userFileForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Member's Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Name" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Contact Number</label>
+                                <input type="number" class="form-control" name="phone" placeholder="Contact number" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Email Id</label>
+                                <input type="email" class="form-control" name="email" placeholder="Email Id" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Password</label>
+                                <input type="password" class="form-control mainPass" name="password" placeholder="password" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Confirm Password</label>
+                                <input type="text" class="form-control confPass" name="confirm_password" placeholder="password" />
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Select Role</label>
+                                <select class="form-select" name="role">
+                                    <option value="">Select role</option>
+                                    <option value="1">Super Admin</option>
+                                    <option value="2">Manager</option>
+                                    <option value="3">Team Lead</option>
+                                    <option value="4">Team Member</option>
+                                </select>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="custom_sm_card">
+                            <div>
+                               <center>
+                                <img src="{% static 'img/profiePicga.png'%}" class="dataFile" />
+                                <input type="file" class="fileUplaod" name="image">
+                                
+                                <p class="mt-3 ctrlData">Upload profile picture<br><span>Only jpg and png format.</span></p>
+                                <span class="btn btn-dark" style="background-color: #b80604;border:none;border-radius: 50px;"><i class="bi bi-upload"></i> Upload File</span>
+                                <span class="error-message" style="color:red;">This field is required.</span>
+                            </center>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-dark buttonMsh" style="background-color: #b80604;border:none;border-radius: 50px;">Save profile</button>
+                    </div>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+

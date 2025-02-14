@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %} Dashboard{% endblock title %}
+{% block Breadcrumb %} Dashboard {% endblock Breadcrumb%}
+{% block body %} 
+{% load static %}
+<div class="container-fluid mt-4">
+    <h4>Welcome to Bridging Immigration, {{user}}</h4>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="Customcard">
+                    <p class="p-3">Lead Explorer</p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-7"></div>
+                        <div class="col-5">
+                            <div class="backgroundYelow p-1 rounded">Lead Onboard</div>
+                            <div class="bg-primary text-light  p-1 rounded mt-2">Cold Lead</div>
+                            <div class="backgroundRed p-1 mt-2 rounded">Hot Lead</div>
+                        </div>
+                        </div>
+                    </div>
+                    <br>
+                    <center><button class="customBtn mt-3">Explore Now</button></center>
+                </div>
+                
+            </div>
+            <div class="col-md-4">
+                <div class="Customcard">
+                    <p class="p-3">Explore Members</p>
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="smallClickCard">
+                                    <center><img class="smallImgIconFlat" src="{% static 'img/assignment.png'%}"/>
+                                        <p class="smallP mt-2">Assign Task</p></center>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="smallClickCard">
+                                    <center><img class="smallImgIconFlat" src="{% static 'img/binoculars.png'%}"/>
+                                        <p class="smallP mt-2">View Task</p></center>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="smallClickCard">
+                                    <center><img class="smallImgIconFlat" src="{% static 'img/guidance.png'%}"/>
+                                        <p class="smallP mt-2">View Activity</p></center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <center><button class="customBtn mt-1">Explore Now</button></center>
+                </div>
+                
+            </div>
+            <div class="col-md-4">
+                <div class="Customcard" style="overflow: hidden;">
+                <div id="chart_div" style="width: 100%; height: 100%;"></div>
+            </div>
+            </div>
+            <div class="col-md-12 mt-4">
+                <div class="Customcard" style="overflow: hidden; height:100%;"><br>
+                <div id="calendar_basic" style="width: 100%; height: 100%;"></div>
+            </div>
+            </div>
+        </div>
+  
+</div>
+
+
+{% endblock body %}
+
