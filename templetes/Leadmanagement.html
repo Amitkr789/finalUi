@@ -259,11 +259,11 @@
                                 <input type="text" class="form-control" name="name" placeholder="Name" />
                                 <span class="error-message">This field is required.</span>
                             </div>
-                            <div class="col-md-4">
-                                <label>Unique Id</label>
-                                <input type="text" class="form-control" name="uniqueId" placeholder="Unique Id" value="{{UnqId}}"/>
-                                <span class="error-message">This field is required.</span>
-                            </div>
+                           <!--<div class="col-md-4"> -->
+<!--                                 <label>Unique Id</label> -->
+                                <input type="hidden" class="form-control" name="uniqueId" placeholder="Unique Id" value="{{UnqId}}" readonly/>
+<!--                                 <span class="error-message">This field is required.</span>
+                            </div> -->
                             <div class="col-md-4">
                                 <label>Email Id</label>
                                 <input type="email" class="form-control" name="email" placeholder="Email Id" />
@@ -285,6 +285,7 @@
                                     <option value="not-interested" style="color: gray;">Not Interested</option>
                                     <option value="junk" style="color: brown;">Junk</option>
                                     <option value="converted" style="color: green; font-weight: bold;">Converted</option>
+                                   <option value="Counselled" style="font-weight: bold;">Counselled</option>
                                 </select>
                                 <span class="error-message">This field is required.</span>
                             </div>
@@ -328,6 +329,28 @@
                             <div class="col-md-4">
                                 <label for="lead-status">Date created </label>
                                 <input type="date" class="form-control" name="doc"/>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                               <div class="col-md-4">
+                                <label for="lead-status">Lead Owner </label>
+                                <select class="form-select" name="LeadOw">
+                                  <option>Select</option>
+                                  <option>Joe 1</option>
+                                    <option>Joe 2</option>
+                                
+                                  
+                              </select>
+                                <span class="error-message">This field is required.</span>
+                            </div>
+                                   <div class="col-md-4">
+                                <label for="lead-status">Marital Status </label>
+                                <select class="form-select" name="Mstat">
+                                  <option>Select</option>
+                                  <option value="Married">Married</option>
+                                    <option value="Unmarried">Unmarried</option>
+                                
+                                  
+                              </select>
                                 <span class="error-message">This field is required.</span>
                             </div>
                             <div class="col-md-4">
